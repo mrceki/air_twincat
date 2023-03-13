@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <GVL Name="GVL" Id="{a52ef5ef-ef4b-41d0-87ca-7cbeea7b1884}">
+    <Declaration><![CDATA[VAR_GLOBAL CONSTANT
+END_VAR
+
+VAR_GLOBAL CONSTANT
+	cnMaxAxis: INT := 7;
+	cnMaxArrayLength: INT := 1500;
+	Max_Row: INT := 3000;
+END_VAR
+
+VAR_GLOBAL
+
+	PowerAxisArm	: ARRAY[1..7] OF TC2_MC2.MC_Power;
+	MC_Move_1_Velocity: ARRAY[1..7] OF MC_MoveVelocity;
+	MC_Move_2_Velocity: ARRAY[1..7] OF MC_MoveVelocity;
+	EksenArm	: ARRAY[1..7] OF AXIS_REF;
+
+	fGoalPos_Arm : ARRAY[1..7] OF LREAL ;
+	fGoalVel_Arm : ARRAY[1..7] OF LREAL := [7(0)];
+	fGoalAcc_Arm : ARRAY[1..7] OF LREAL := [7(0)];
+	fActPose_Arm : ARRAY[1..7] OF LREAL ;
+	fActVel_Arm: ARRAY[1..7] OF LREAL;
+	
+	bArmEnable: ARRAY [1..7] OF BOOL  := [7(TRUE)];
+	bArmNegative: ARRAY[1..7] OF BOOL := [7(TRUE)];
+	bArmPositive: ARRAY[1..7] OF BOOL := [7(TRUE)];
+	
+	SAVE_DATA: BOOL := FALSE;
+	csvActPos: ARRAY[1..1500, 1..7] OF LREAL;
+	csvActVel: ARRAY[1..1500, 1..7] OF LREAL;
+	csvGoalPos: ARRAY[1..1500, 1..7] OF LREAL;
+	csvGoalVel: ARRAY[1..1500, 1..7] OF LREAL;
+	
+	fArmOverride: REAL := 100;	
+	
+	bMove_1_Arm:  BOOL := FALSE;
+	bMove_2_Arm:  BOOL := FALSE;
+	
+	Error_latch: ARRAY[1..7] OF UDINT ;
+	
+	axis_done_state: UDINT := 0;
+	state_DONE: BOOL := FALSE;
+	state_HALT: BOOL := FALSE;
+	state_TIMEOUT: BOOL := FALSE;
+
+	MC_Halt_1: MC_Halt;
+	MC_Halt_2: MC_Halt;
+	MC_Halt_3: MC_Halt;
+	MC_Halt_4: MC_Halt;
+	MC_Halt_5: MC_Halt;
+	MC_Halt_6: MC_Halt;
+	MC_Halt_7: MC_Halt;
+	
+	f_Halt_Dec_Arm : ARRAY[1..7] OF LREAL;
+	fHalt_jerk: LREAL := 20;	
+	
+	fLastTimeStamp: UDINT;
+	fActTimeStamp: UDINT;
+	max_time_out: UDINT :=2000;
+	
+	nWriteArrayCount: INT := Max_Row;
+	RefPos: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	RefVel: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	ActPos: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	ActVel: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	RefTrk: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	ActTrk: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	RefDrv: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	ActDrv: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	RefAcc: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	ActAcc: ARRAY[1..Max_Row, 1..cnMaxAxis] OF LREAL;
+	
+	bLimitSwitch AT%I*: BOOL := FALSE;
+	state_INIT : BOOL := TRUE;
+	state_Eksen2_INIT : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+  </GVL>
+</TcPlcObject>

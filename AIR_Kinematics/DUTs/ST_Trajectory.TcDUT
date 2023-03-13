@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.5">
+  <DUT Name="ST_Trajectory" Id="{62a5f936-2464-4b3c-a696-77b34f02ac89}">
+    <Declaration><![CDATA[TYPE ST_Trajectory :
+STRUCT
+	fPosition: LREAL;
+	fVelocity: LREAL;
+	fAcceleration: LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
